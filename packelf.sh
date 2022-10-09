@@ -29,5 +29,5 @@ EOF
 libs="$(ldd "$src" | grep -F '/' | sed -E 's|[^/]*/([^ ]+).*?|/\1|')"
 ld_so="$(echo "$libs" | grep -F '/ld-linux-')"
 sed -E -i -e 's|PROGRAM|'"$(basename "$src")"'|' -e 's|LD_SO|'"$(basename "$ld_so")"'|' "$dst"
-tar -czh --transform 's/.*\///g' "$src" $libs >>"$dst" "$@" 2> >(grep -v 'Removing leading' >&2)
+tar -czh --transform 's/.*\///g' "$src" $libs "$@" >>"$dst" 2> >(grep -v 'Removing leading' >&2)
 chmod +x "$dst"
