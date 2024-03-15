@@ -29,3 +29,4 @@ Generate a tar that include all the llibraries from the host, with a tiny shell 
 perf version 3.10.0-1160.49.1.el7.x86_64.debug
 ```
 
+Repository with CI that generate a release with the zip package automatically: https://github.com/Mte90/yad-static-build
