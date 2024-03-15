@@ -18,15 +18,12 @@ program="$(basename "$src")"
 
 cat >"$dst" <<EOF
 #!/usr/bin/env sh
-tmp_dir="\$(mktemp -d)"
-check_path="\$tmp_dir/__check_permission__"
-trap 'rm -rf \$tmp_dir' 0 1 2 3 6
-if ! (touch "\$check_path" && chmod +x "\$check_path" && [ -x "\$check_path" ]); then
-    rm -rf "\$tmp_dir"
-    tmp_dir="\$(TMPDIR="\$(pwd)" mktemp -d)"
+tmp_dir="/tmp/static-$program"
+if [ ! -d "\$tmp_dir" ]; then
+    mkdir "\$tmp_dir"
+    sed '1,/^#__END__$/d' "\$0" | tar -xz -C "\$tmp_dir"
+    sed -i 's@/etc/ld.so.preload@/etc/___so.preload@g' "\$tmp_dir/$ld_so"
 fi
-sed '1,/^#__END__$/d' "\$0" | tar -xz -C "\$tmp_dir"
-sed -i 's@/etc/ld.so.preload@/etc/___so.preload@g' "\$tmp_dir/$ld_so"
 "\$tmp_dir/$ld_so" --library-path "\$tmp_dir" "\$tmp_dir/$program" "\$@"
 exit \$?
 #__END__
