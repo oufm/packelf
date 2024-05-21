@@ -65,5 +65,10 @@ sys     0m0.133s
 ## dependence
 * sh
 * tar
+* sed
+* grep
+* chmod
+* readlink
+* ldd (only needed for packing, not needed for executing or unpacking)
 
 Note: If your tar doesn't support gzip, '-n' is needed when you pack a program.
