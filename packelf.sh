@@ -125,6 +125,7 @@ unpack() {
         sed '/^#__END__$/,$d' "$0" > "$unpack_dir/$program"
         sed -i -E 's/^run_mode=\w*$/run_mode=loader/' "$unpack_dir/$program"
         chmod +x "$unpack_dir/$program"
+        rm -f "$check_path"
         echo "'$program' was unpacked to '$unpack_dir'."
         echo "$unpack_dir" | grep -q / || unpack_dir="./$unpack_dir"
         echo "You can run '$unpack_dir/$program ARGS...' to execute the command."
