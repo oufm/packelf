@@ -74,7 +74,7 @@ pack() {
         >"$dst"
 
     tar $compress_flag -ch \
-        --transform 's/.*\//'"$program"'.res\//' \
+        --transform 's@.*/@'"$program"'.res/@' \
         "$src" $libs "$@" \
         >>"$dst" #\
         #2> >(grep -v 'Removing leading' >&2) # bash extension
