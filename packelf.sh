@@ -73,6 +73,8 @@ pack() {
         -e 's/^ld_so=[^ ]*$/ld_so='"$ld_so"'/' \
         >"$dst"
 
+    echo '#__END__' >>"$dst"
+
     tar $compress_flag -ch \
         --transform 's@.*/@'"$program"'.res/@' \
         "$src" $libs "$@" \
@@ -146,4 +148,3 @@ else
 fi
 
 exit 0
-#__END__
