@@ -62,7 +62,7 @@ pack() {
     shift
 
     libs="$(ldd "$src" | grep -F '/' | sed -E 's|[^/]*/([^ ]+).*?|/\1|')"
-    ld_so="$(echo "$libs" | grep -F '/ld-linux-')"
+    ld_so="$(echo "$libs" | grep -F '/ld-linux-' || echo "$libs" | grep -F '/ld-musl-')"
     ld_so="$(basename "$ld_so")"
     program="$(basename "$src")"
 
